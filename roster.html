@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NOLIMIT 선수 소개</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header>
+		<div class="logo" aria-label="NOLIMIT"><span class="logo-wordmark">NOL<span class="logo-bolt" aria-hidden="true"></span>MIT</span></div>
+		<nav class="nav-links">
+			<a href="home.html">팀 소개</a>
+			<a href="roster.html" class="active">선수 소개</a>
+			<a href="admit.html">관리자 페이지</a>
+		</nav>
+	</header>
+
+	<main class="container roster-page">
+		<div class="card">
+			<div class="card-title">TEAM ROSTER</div>
+			<div class="member-grid" id="user-member-list">
+				<!-- 동적으로 선수 정보가 나타납니다 -->
+			</div>
+		</div>
+	</main>
+
+	<footer class="social-footer">
+		<p>NOLIMIT SOCIAL</p>
+		<div class="social-links">
+			<a class="social-button youtube" href="https://www.youtube.com/channel/UCcgmu5iWTG6tjbjKwKVpgLg" target="_blank" rel="noopener noreferrer">얼티랩(Ultilab) 유튜브</a>
+			<a class="social-button instagram" href="https://www.instagram.com/ultilab_/" target="_blank" rel="noopener noreferrer">@ultilab</a>
+		</div>
+	</footer>
+
+	<script src="add.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", renderUserPage);
+	</script>
+</body>
+</html>

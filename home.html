@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NOLIMIT Ultimate Frisbee Team</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header>
+		<div class="logo" aria-label="NOLIMIT"><span class="logo-wordmark">NOL<span class="logo-bolt" aria-hidden="true"></span>MIT</span></div>
+		<nav class="nav-links">
+			<a href="home.html" class="active">팀 소개</a>
+			<a href="admit.html">관리자 페이지</a>
+		</nav>
+	</header>
+
+	<div class="container">
+		<div class="card hero">
+			<img class="hero-logo" src="logo.png.png" alt="NOLIMIT 팀 로고">
+			<h1>NOLIMIT ULTIMATE</h1>
+			<p> 대한민국 얼티밋 프리즈비 팀</p>
+		</div>
+
+		<div class="card">
+			<div class="card-title">ABOUT US</div>
+			<p id="user-about">팀 소개글을 불러오는 중입니다...</p>
+		</div>
+
+		<div class="card">
+			<div class="card-title">TEAM ROSTER</div>
+			<a class="btn" href="roster.html">선수 소개</a>
+		</div>
+
+		<div class="card">
+			<div class="card-title">TRAINING SCHEDULE</div>
+			<p class="card-description">다가오는 연습 일정을 확인하고 참석 여부를 알려주세요.</p>
+			<a class="btn" href="schedule.html">연습 일정 확인</a>
+		</div>
+
+		<div class="card">
+			<div class="card-title">Q&amp;A</div>
+			<form id="question-form" onsubmit="submitQuestion(event)">
+				<div class="form-group">
+					<label for="question-author">이름</label>
+					<input type="text" id="question-author" placeholder="예: 김민수" required>
+				</div>
+				<div class="form-group">
+					<label for="question-text">질문</label>
+					<textarea id="question-text" rows="4" placeholder="팀에 궁금한 점을 남겨주세요." required></textarea>
+				</div>
+				<button type="submit" class="btn">질문 등록하기</button>
+			</form>
+			<p id="question-status" class="admin-status" role="status" aria-live="polite"></p>
+			<div id="user-question-list" class="question-list"></div>
+		</div>
+	</div>
+
+	<footer class="social-footer">
+		<p>NOLIMIT SOCIAL</p>
+		<div class="social-links">
+			<a class="social-button youtube" href="https://www.youtube.com/channel/UCcgmu5iWTG6tjbjKwKVpgLg" target="_blank" rel="noopener noreferrer">얼티랩(Ultilab) 유튜브</a>
+			<a class="social-button instagram" href="https://www.instagram.com/ultilab_/" target="_blank" rel="noopener noreferrer">@ultilab</a>
+		</div>
+	</footer>
+
+	<script src="add.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", renderUserPage);
+	</script>
+</body>
+</html>

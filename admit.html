@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOLIMIT - 관리자 대시보드</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo" aria-label="NOLIMIT Admin"><span class="logo-wordmark">NOL<span class="logo-bolt" aria-hidden="true"></span>MIT</span><span class="logo-context">Admin</span></div>
+    <nav class="nav-links">
+      <a href="home.html">사용자 사이트 보기</a>
+      <a href="admit.html" class="active">관리자 대시보드</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- 팀 소개글 수정 -->
+    <div class="card">
+      <div class="card-title">팀 소개글 수정</div>
+      <div class="form-group">
+        <label for="admin-about-input">팀 소개문구</label>
+        <textarea id="admin-about-input" rows="5"></textarea>
+      </div>
+      <button class="btn" onclick="saveAbout()">소개글 변경사항 저장</button>
+      <p id="admin-status" class="admin-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <!-- 신규 회원/선수 등록 -->
+    <div class="card">
+      <div class="card-title">선수/회원 등록</div>
+      <form id="add-member-form" onsubmit="addMember(event)">
+        <div class="form-group">
+          <label>이름</label>
+          <input type="text" id="member-name" placeholder="예: 홍길동" required>
+        </div>
+        <div class="form-group">
+          <label>등번호</label>
+          <input type="text" id="member-number" placeholder="예: 07" required>
+        </div>
+        <div class="form-group">
+          <label>포지션</label>
+          <input type="text" id="member-position" placeholder="예: Handler, Cutter" required>
+        </div>
+        <button type="submit" class="btn">선수 추가하기</button>
+      </form>
+    </div>
+
+    <!-- 회원 목록 관리 -->
+    <div class="card">
+      <div class="card-title">등록된 회원 목록</div>
+      <table>
+        <thead>
+          <tr>
+            <th>등번호</th>
+            <th>이름</th>
+            <th>포지션</th>
+            <th>관리</th>
+          </tr>
+        </thead>
+        <tbody id="admin-member-table">
+          <!-- 회원 목록이 동적으로 들어갑니다 -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Q&amp;A 관리</div>
+      <div id="admin-question-list" class="question-list"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">연습 일정 등록</div>
+      <form id="add-schedule-form" onsubmit="addSchedule(event)">
+        <div class="schedule-form-grid">
+          <div class="form-group">
+            <label for="schedule-date">날짜</label>
+            <input type="date" id="schedule-date" required>
+          </div>
+          <div class="form-group">
+            <label for="schedule-time">시간</label>
+            <input type="time" id="schedule-time" required>
+          </div>
+          <div class="form-group">
+            <label for="schedule-title">일정명</label>
+            <input type="text" id="schedule-title" placeholder="예: 정기 훈련" required>
+          </div>
+          <div class="form-group">
+            <label for="schedule-location">장소</label>
+            <input type="text" id="schedule-location" placeholder="예: 한강공원" required>
+          </div>
+        </div>
+        <button type="submit" class="btn">일정 등록하기</button>
+      </form>
+      <p id="schedule-admin-status" class="admin-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">등록된 연습 일정</div>
+      <div id="admin-schedule-list" class="schedule-list"></div>
+    </div>
+  </div>
+
+  <footer class="social-footer">
+    <p>NOLIMIT SOCIAL</p>
+    <div class="social-links">
+      <a class="social-button youtube" href="https://www.youtube.com/channel/UCcgmu5iWTG6tjbjKwKVpgLg" target="_blank" rel="noopener noreferrer">얼티랩(Ultilab) 유튜브</a>
+      <a class="social-button instagram" href="https://www.instagram.com/ultilab_/" target="_blank" rel="noopener noreferrer">@ultilab</a>
+    </div>
+  </footer>
+
+  <script src="add.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", renderAdminPage);
+  </script>
+</body>
+</html>

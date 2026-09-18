@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NOLIMIT 연습 일정</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header>
+		<div class="logo" aria-label="NOLIMIT"><span class="logo-wordmark">NOL<span class="logo-bolt" aria-hidden="true"></span>MIT</span></div>
+		<nav class="nav-links">
+			<a href="home.html">팀 소개</a>
+			<a href="schedule.html" class="active">연습 일정</a>
+			<a href="admit.html">관리자 페이지</a>
+		</nav>
+	</header>
+
+	<main class="container schedule-page">
+		<div class="schedule-heading">
+			<div>
+				<p class="section-kicker">NOLIMIT TRAINING</p>
+				<h1>연습 일정</h1>
+				<p>등록된 선수 이름을 선택해 참석 여부를 알려주세요.</p>
+			</div>
+			<div class="calendar-controls">
+				<button type="button" class="calendar-arrow" onclick="changeScheduleMonth(-1)" aria-label="이전 달">&lt;</button>
+				<strong id="schedule-month-label"></strong>
+				<button type="button" class="calendar-arrow" onclick="changeScheduleMonth(1)" aria-label="다음 달">&gt;</button>
+			</div>
+		</div>
+
+		<div class="card calendar-card">
+			<div class="calendar-weekdays">
+				<span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+			</div>
+			<div id="schedule-calendar" class="schedule-calendar"></div>
+		</div>
+
+		<section class="card">
+			<div class="card-title">선택한 날짜의 일정</div>
+			<div id="schedule-list" class="schedule-list"></div>
+		</section>
+	</main>
+
+	<footer class="social-footer">
+		<p>NOLIMIT SOCIAL</p>
+		<div class="social-links">
+			<a class="social-button youtube" href="https://www.youtube.com/channel/UCcgmu5iWTG6tjbjKwKVpgLg" target="_blank" rel="noopener noreferrer">얼티랩(Ultilab) 유튜브</a>
+			<a class="social-button instagram" href="https://www.instagram.com/ultilab_/" target="_blank" rel="noopener noreferrer">@ultilab</a>
+		</div>
+	</footer>
+
+	<script src="add.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", renderSchedulePage);
+	</script>
+</body>
+</html>
