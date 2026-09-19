@@ -3,17 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<body>
+	<title>NOLIMIT 시작하기</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
 		<section class="launch-screen" id="launch-screen" aria-labelledby="launch-title">
 			<div class="launch-panel">
+				<div class="launch-brand">NOL<span aria-hidden="true">⚡</span>MIT</div>
 				<p class="launch-kicker">NOLIMIT ULTIMATE</p>
 				<h1 id="launch-title">원반을 던져보세요 !</h1>
-				<p class="launch-help">🥏를 목표 지점까지 드래그하세요</p>
+				<p class="launch-help">🥏를 오른쪽으로 힘껏 드래그해 날려주세요</p>
 				<div class="launch-field" id="launch-field">
-					<div class="launch-target" id="launch-target" aria-label="원반을 놓을 목표 지점">여기에 놓기</div>
-					<button class="disc" id="disc" type="button" aria-label="드래그할 원반">🥏</button>
+					<div class="launch-line"></div>
+					<div class="launch-start-label">START</div>
+					<div class="launch-target" id="launch-target" aria-label="원반을 날릴 목표 지점"><span>GO</span></div>
+					<div class="flight-trail" id="flight-trail" aria-hidden="true"></div>
+					<button class="disc" id="disc" type="button" aria-label="원반을 오른쪽으로 드래그해 날리기">🥏</button>
 				</div>
-				<p class="launch-status" id="launch-status" role="status" aria-live="polite"></p>
+				<p class="launch-status" id="launch-status" role="status" aria-live="polite">출발선에서 오른쪽으로 드래그하세요</p>
 			</div>
 		</section>
 
@@ -21,28 +28,31 @@
 			const launchScreen = document.getElementById("launch-screen");
 			const launchField = document.getElementById("launch-field");
 			const launchTarget = document.getElementById("launch-target");
+			const flightTrail = document.getElementById("flight-trail");
 			const launchStatus = document.getElementById("launch-status");
 			const disc = document.getElementById("disc");
 			let isDragging = false;
-			let offsetX = 0;
-			let offsetY = 0;
+			let startX = 0;
+			let startY = 0;
 
 			disc.addEventListener("pointerdown", event => {
 				isDragging = true;
 				disc.setPointerCapture(event.pointerId);
-				const discRect = disc.getBoundingClientRect();
-				offsetX = event.clientX - discRect.left - discRect.width / 2;
-				offsetY = event.clientY - discRect.top - discRect.height / 2;
+				startX = event.clientX;
+				startY = event.clientY;
 				disc.classList.add("is-dragging");
+				flightTrail.classList.add("is-visible");
 			});
 
 			disc.addEventListener("pointermove", event => {
 				if (!isDragging) return;
 				const fieldRect = launchField.getBoundingClientRect();
-				const x = event.clientX - fieldRect.left - disc.offsetWidth / 2 - offsetX;
-				const y = event.clientY - fieldRect.top - disc.offsetHeight / 2 - offsetY;
+				const x = event.clientX - fieldRect.left - disc.offsetWidth / 2;
+				const y = event.clientY - fieldRect.top - disc.offsetHeight / 2;
 				disc.style.left = `${Math.max(0, Math.min(x, fieldRect.width - disc.offsetWidth))}px`;
 				disc.style.top = `${Math.max(0, Math.min(y, fieldRect.height - disc.offsetHeight))}px`;
+				flightTrail.style.width = `${Math.max(0, event.clientX - startX)}px`;
+				flightTrail.style.transform = `translateY(${event.clientY - startY}px)`;
 			});
 
 			disc.addEventListener("pointerup", event => {
@@ -50,20 +60,23 @@
 				isDragging = false;
 				disc.releasePointerCapture(event.pointerId);
 				disc.classList.remove("is-dragging");
+				flightTrail.classList.remove("is-visible");
+				const dragDistance = event.clientX - startX;
 				const targetRect = launchTarget.getBoundingClientRect();
-				const isInsideTarget = event.clientX >= targetRect.left &&
-					event.clientX <= targetRect.right &&
-					event.clientY >= targetRect.top &&
-					event.clientY <= targetRect.bottom;
+				const landedInTarget = event.clientX >= targetRect.left - 30 && event.clientX <= targetRect.right + 30;
+				const threwFarEnough = dragDistance > launchField.clientWidth * 0.42;
 
-				if (isInsideTarget) {
+				if (dragDistance > 30 && (landedInTarget || threwFarEnough)) {
 					launchStatus.textContent = "좋아요! 사이트로 이동합니다.";
+					disc.classList.add("is-launched");
 					launchScreen.classList.add("is-complete");
 					window.setTimeout(() => {
 						window.location.href = "home.html";
 					}, 500);
 				} else {
-					launchStatus.textContent = "목표 지점 안에 원반을 놓아주세요.";
+					launchStatus.textContent = "조금 더 오른쪽으로 힘껏 날려보세요.";
+					disc.style.left = "8%";
+					disc.style.top = "calc(50% - 36px)";
 				}
 			});
 		</script>
