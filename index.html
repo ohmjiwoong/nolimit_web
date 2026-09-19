@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<body>
+		<section class="launch-screen" id="launch-screen" aria-labelledby="launch-title">
+			<div class="launch-panel">
+				<p class="launch-kicker">NOLIMIT ULTIMATE</p>
+				<h1 id="launch-title">원반을 던져보세요 !</h1>
+				<p class="launch-help">🥏를 목표 지점까지 드래그하세요</p>
+				<div class="launch-field" id="launch-field">
+					<div class="launch-target" id="launch-target" aria-label="원반을 놓을 목표 지점">여기에 놓기</div>
+					<button class="disc" id="disc" type="button" aria-label="드래그할 원반">🥏</button>
+				</div>
+				<p class="launch-status" id="launch-status" role="status" aria-live="polite"></p>
+			</div>
+		</section>
+
+		<script>
+			const launchScreen = document.getElementById("launch-screen");
+			const launchField = document.getElementById("launch-field");
+			const launchTarget = document.getElementById("launch-target");
+			const launchStatus = document.getElementById("launch-status");
+			const disc = document.getElementById("disc");
+			let isDragging = false;
+			let offsetX = 0;
+			let offsetY = 0;
+
+			disc.addEventListener("pointerdown", event => {
+				isDragging = true;
+				disc.setPointerCapture(event.pointerId);
+				const discRect = disc.getBoundingClientRect();
+				offsetX = event.clientX - discRect.left - discRect.width / 2;
+				offsetY = event.clientY - discRect.top - discRect.height / 2;
+				disc.classList.add("is-dragging");
+			});
+
+			disc.addEventListener("pointermove", event => {
+				if (!isDragging) return;
+				const fieldRect = launchField.getBoundingClientRect();
+				const x = event.clientX - fieldRect.left - disc.offsetWidth / 2 - offsetX;
+				const y = event.clientY - fieldRect.top - disc.offsetHeight / 2 - offsetY;
+				disc.style.left = `${Math.max(0, Math.min(x, fieldRect.width - disc.offsetWidth))}px`;
+				disc.style.top = `${Math.max(0, Math.min(y, fieldRect.height - disc.offsetHeight))}px`;
+			});
+
+			disc.addEventListener("pointerup", event => {
+				if (!isDragging) return;
+				isDragging = false;
+				disc.releasePointerCapture(event.pointerId);
+				disc.classList.remove("is-dragging");
+				const targetRect = launchTarget.getBoundingClientRect();
+				const isInsideTarget = event.clientX >= targetRect.left &&
+					event.clientX <= targetRect.right &&
+					event.clientY >= targetRect.top &&
+					event.clientY <= targetRect.bottom;
+
+				if (isInsideTarget) {
+					launchStatus.textContent = "좋아요! 사이트로 이동합니다.";
+					launchScreen.classList.add("is-complete");
+					window.setTimeout(() => {
+						window.location.href = "home.html";
+					}, 500);
+				} else {
+					launchStatus.textContent = "목표 지점 안에 원반을 놓아주세요.";
+				}
+			});
+		</script>
+	</body>
+</html>
